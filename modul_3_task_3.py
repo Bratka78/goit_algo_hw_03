@@ -1,15 +1,19 @@
 
+
+
 def normalize_phone(phone_number: str):
     number = ""
     for i in phone_number:
-        if i.isdigit():
+        if i.isdigit() or i == '+':
             number += i
 
-    if not number.startswith("38"):
-        number = "38" + number
-    return "+" + number
-
-
+    if number.startswith("38"):
+        number = "+" + number
+    elif not number.startswith("+"):
+        number = "+38" + number
+   
+    return number
+   
 raw_numbers = [
     "067\\t123 4567",
     "(095) 234-5678\\n",
@@ -18,8 +22,11 @@ raw_numbers = [
     "    +38(050)123-32-34",
     "     0503451234",
     "(050)8889900",
+    "(050)8ww9900",
     "38050-111-22-22",
     "38050 111 22 11   ",
+    "4912 3456 789  ",
+    "+49 123 456 789"
 ]
 print(raw_numbers)
 sanitized_numbers = [normalize_phone(num) for num in raw_numbers]
